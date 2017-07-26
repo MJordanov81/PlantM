@@ -32,7 +32,7 @@ namespace PlantM.Controllers
                 });
             }
 
-            ViewBag.CustomGroup = customGroups;
+            ViewBag.CustomGroupList = customGroups;
 
             IQueryable<string> familyQuery = from g in familyDb.Family
                 select g.Name;
@@ -58,7 +58,7 @@ namespace PlantM.Controllers
         // POST: SpeciesLabel/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Name,CustomGroup,Family,Genus,Species")] SpeciesLabel speciesLabel)
+        public ActionResult Create([Bind(Include = "CustomGroup,Family,Genus,Species")] SpeciesLabel speciesLabel)
         {
 
 
