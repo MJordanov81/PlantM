@@ -5,25 +5,24 @@ using System.Linq;
 using System.Net.Mime;
 using System.Web;
 using System.Web.Mvc;
+using PlantM.Models;
 using PlantM.Models.PlantModels;
 
 namespace PlantM.Controllers
 {
+        [Authorize]
     public class SpeciesLabelController : Controller
     {
-        SpeciesLabelDbContext db = new SpeciesLabelDbContext();
-        CustomGroupDbContext customGroupsDb = new CustomGroupDbContext();
-        FamilyDbContext familyDb = new FamilyDbContext();
-        GenusDbContext genusDb = new GenusDbContext();
-        SpeciesDbContext speciesDb = new SpeciesDbContext();
 
         // GET: SpeciesLabel
-        public ActionResult Create()
+        [HttpGet]
+        public ActionResult Create(string confirmationMessage)
         {
             ViewBag.CustomGroupList = GetCustomGroups();
             ViewBag.FamilyList = GetFamilies();
             ViewBag.GenusList = GetGenera();
             ViewBag.SpeciesList = GetSpecies();
+            ViewBag.Message = confirmationMessage;
 
             return View();
         }
@@ -31,13 +30,18 @@ namespace PlantM.Controllers
         // POST: SpeciesLabel/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Name,CustomGroup,Family,Genus,Species")] SpeciesLabel speciesLabel)
+        public ActionResult Create([Bind(Include = "CustomGroupName,FamilyName,GenusName,SpeciesName")] SpeciesLabel speciesLabel)
         {
             if (ModelState.IsValid)
             {
-                db.SpeciesLabel.Add(speciesLabel);
-                db.SaveChanges();
-                return RedirectToAction("Create");
+                using (var db = new ApplicationDbContext())
+                {
+                    speciesLabel.Name = string.Format($"{speciesLabel.GenusName} - {speciesLabel.SpeciesName}");
+
+                    db.SpeciesLabel.Add(speciesLabel);
+                    db.SaveChanges();
+                    return RedirectToAction("Create", new { confirmationMessage = $"Label '{speciesLabel.Name}' has been created!" });
+                }
             }
 
             ViewBag.CustomGroupList = GetCustomGroups();
@@ -50,74 +54,94 @@ namespace PlantM.Controllers
 
         private List<SelectListItem> GetCustomGroups()
         {
-            List<SelectListItem> customGroups = new List<SelectListItem>();
-            IQueryable<string> customGroupsQuery = from g in customGroupsDb.CustomGroup
-                select g.Name;
-
-            foreach (var element in customGroupsQuery)
+            using (var db = new ApplicationDbContext())
             {
-                customGroups.Add(new SelectListItem()
-                {
-                    Value = element,
-                    Text = element
-                });
-            }
+                List<SelectListItem> customGroups = new List<SelectListItem>();
+                IQueryable<string> customGroupsQuery = from g in db.CustomGroup
+                    select g.Name;
 
-            return customGroups;
+                foreach (var element in customGroupsQuery)
+                {
+                    customGroups.Add(new SelectListItem()
+                    {
+                        Value = element,
+                        Text = element
+                    });
+                }
+
+                return customGroups;
+            }
         }
 
         private List<SelectListItem> GetFamilies()
         {
-            List<SelectListItem> families = new List<SelectListItem>();
-            IQueryable<string> familiesQuery = from g in familyDb.Family
-                select g.Name;
-
-            foreach (var element in familiesQuery)
+            using (var db = new ApplicationDbContext())
             {
-                families.Add(new SelectListItem()
-                {
-                    Value = element,
-                    Text = element
-                });
-            }
+                List<SelectListItem> families = new List<SelectListItem>();
+                IQueryable<string> familiesQuery = from g in db.Family
+                    select g.Name;
 
-            return families;
+                foreach (var element in familiesQuery)
+                {
+                    families.Add(new SelectListItem()
+                    {
+                        Value = element,
+                        Text = element
+                    });
+                }
+
+                return families;
+            }
         }
 
         private List<SelectListItem> GetGenera()
         {
-            List<SelectListItem> genera = new List<SelectListItem>();
-            IQueryable<string> generaQuery = from g in genusDb.Genus
-                select g.Name;
-
-            foreach (var element in generaQuery)
+            using (var db = new ApplicationDbContext())
             {
-                genera.Add(new SelectListItem()
-                {
-                    Value = element,
-                    Text = element
-                });
-            }
+                List<SelectListItem> genera = new List<SelectListItem>();
+                IQueryable<string> generaQuery = from g in db.Genus
+                    select g.Name;
 
-            return genera;
+                foreach (var element in generaQuery)
+                {
+                    genera.Add(new SelectListItem()
+                    {
+                        Value = element,
+                        Text = element
+                    });
+                }
+
+                return genera;
+            }
         }
 
         private List<SelectListItem> GetSpecies()
         {
-            List<SelectListItem> species = new List<SelectListItem>();
-            IQueryable<string> speciesQuery = from g in speciesDb.Species
-                select g.Name;
-
-            foreach (var element in speciesQuery)
+            using (var db = new ApplicationDbContext())
             {
-                species.Add(new SelectListItem()
-                {
-                    Value = element,
-                    Text = element
-                });
-            }
+                List<SelectListItem> species = new List<SelectListItem>();
+                IQueryable<string> speciesQuery = from g in db.Species
+                    select g.Name;
 
-            return species;
+                foreach (var element in speciesQuery)
+                {
+                    species.Add(new SelectListItem()
+                    {
+                        Value = element,
+                        Text = element
+                    });
+                }
+
+                return species;
+            }
         }
+    }
+
+    public class SpeciesLabelAttributes
+    {
+        public string CustomGroupName { get; set; }
+        public string FamilyName { get; set; }
+        public string GenusName { get; set; }
+        public string SpeciesName { get; set; }
     }
 }

@@ -11,15 +11,4 @@ namespace PlantM.Models.PlantModels
         [Index(IsUnique = true)]
         public string Name { get; set; }
     }
-
-    public class GenusDbContext : DbContext
-    {
-        public GenusDbContext()
-            : base("DefaultConnection")
-        {
-
-        }
-
-        public DbSet<Genus> Genus { get; set; }
-    }
 }

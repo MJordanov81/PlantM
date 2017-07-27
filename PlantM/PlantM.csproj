@@ -192,24 +192,35 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AcquisitionTypeController.cs" />
     <Compile Include="Controllers\CustomGroupController.cs" />
     <Compile Include="Controllers\FamilyController.cs" />
     <Compile Include="Controllers\GenusController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LocationController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PlantController.cs" />
+    <Compile Include="Controllers\SoilController.cs" />
     <Compile Include="Controllers\SpeciesController.cs" />
     <Compile Include="Controllers\SpeciesLabelController.cs" />
+    <Compile Include="Controllers\VendorController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Exceptions\ObjectInUseException.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\PlantModels\AcquisitionType.cs" />
     <Compile Include="Models\PlantModels\CustomGroup.cs" />
     <Compile Include="Models\PlantModels\Family.cs" />
     <Compile Include="Models\PlantModels\Genus.cs" />
+    <Compile Include="Models\PlantModels\Location.cs" />
+    <Compile Include="Models\PlantModels\Plant.cs" />
+    <Compile Include="Models\PlantModels\Soil.cs" />
     <Compile Include="Models\PlantModels\Species.cs" />
     <Compile Include="Models\PlantModels\SpeciesLabel.cs" />
+    <Compile Include="Models\PlantModels\Vendor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -277,6 +288,29 @@
     <Content Include="Views\Genus\Create.cshtml" />
     <Content Include="Views\Species\Create.cshtml" />
     <Content Include="Views\SpeciesLabel\Create.cshtml" />
+    <Content Include="Views\Soil\Create.cshtml" />
+    <Content Include="Views\Soil\Delete.cshtml" />
+    <Content Include="Views\Soil\Details.cshtml" />
+    <Content Include="Views\Soil\Edit.cshtml" />
+    <Content Include="Views\Soil\Index.cshtml" />
+    <Content Include="Views\Vendor\Create.cshtml" />
+    <Content Include="Views\Vendor\Delete.cshtml" />
+    <Content Include="Views\Vendor\Details.cshtml" />
+    <Content Include="Views\Vendor\Edit.cshtml" />
+    <Content Include="Views\Vendor\Index.cshtml" />
+    <Content Include="Views\Location\Create.cshtml" />
+    <Content Include="Views\Location\Delete.cshtml" />
+    <Content Include="Views\Location\Details.cshtml" />
+    <Content Include="Views\Location\Edit.cshtml" />
+    <Content Include="Views\Location\Index.cshtml" />
+    <Content Include="Views\AcquisitionType\Create.cshtml" />
+    <Content Include="Views\AcquisitionType\Delete.cshtml" />
+    <Content Include="Views\AcquisitionType\Index.cshtml" />
+    <Content Include="Views\Plant\Create.cshtml" />
+    <Content Include="Views\Plant\Delete.cshtml" />
+    <Content Include="Views\Plant\Details.cshtml" />
+    <Content Include="Views\Plant\Edit.cshtml" />
+    <Content Include="Views\Plant\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using PlantM.Models;
 using PlantM.Models.PlantModels;
 
 namespace PlantM.Controllers
 {
+    [Authorize]
     public class SpeciesController : Controller
     {
-        SpeciesDbContext db = new SpeciesDbContext();
+/*        SpeciesDbContext db = new SpeciesDbContext();*/
 
         // GET: Species
         public ActionResult Create()
@@ -24,9 +26,13 @@ namespace PlantM.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Species.Add(species);
-                db.SaveChanges();
-                return RedirectToAction("Create");
+                using (var db = new ApplicationDbContext())
+                {
+                    db.Species.Add(species);
+                    db.SaveChanges();
+                    ViewBag.Message = "Hello"; 
+                    return RedirectToAction("Create", "SpeciesLabel", new {confirmationMessage = $"Species {species.Name} has been created!"});
+                }
             }
 
             return View();

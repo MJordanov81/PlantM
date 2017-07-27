@@ -1,11 +1,13 @@
 ﻿using System.Web.Mvc;
+using PlantM.Models;
 using PlantM.Models.PlantModels;
 
 namespace PlantM.Controllers
 {
+    [Authorize]
     public class GenusController : Controller
     {
-        GenusDbContext db = new GenusDbContext();
+/*        GenusDbContext db = new GenusDbContext();*/
 
         // GET: Genus
         public ActionResult Create()
@@ -20,9 +22,12 @@ namespace PlantM.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Genus.Add(genus);
-                db.SaveChanges();
-                return RedirectToAction("Create");
+                using (var db = new ApplicationDbContext())
+                {
+                    db.Genus.Add(genus);
+                    db.SaveChanges();
+                    return RedirectToAction("Create", "SpeciesLabel", new { confirmationMessage = $"Genus {genus.Name} has been created!" });
+                }
             }
 
             return View();

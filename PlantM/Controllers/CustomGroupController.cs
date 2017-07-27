@@ -1,11 +1,13 @@
 ﻿using PlantM.Models.PlantModels;
 using System.Web.Mvc;
+using PlantM.Models;
 
 namespace PlantM.Controllers
 {
+    [Authorize]
     public class CustomGroupController : Controller
     {
-        private CustomGroupDbContext db = new CustomGroupDbContext();
+/*        private CustomGroupDbContext db = new CustomGroupDbContext();*/
 
         // GET: CustomGroup/Create
         public ActionResult Create()
@@ -20,9 +22,12 @@ namespace PlantM.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.CustomGroup.Add(customGroup);
-                db.SaveChanges();
-                return RedirectToAction("Create");
+                using (var db = new ApplicationDbContext())
+                {
+                    db.CustomGroup.Add(customGroup);
+                    db.SaveChanges();
+                    return RedirectToAction("Create", "SpeciesLabel", new { confirmationMessage = $"Custom group {customGroup.Name} has been created!" });
+                }
             }
 
             return View();

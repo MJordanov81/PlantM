@@ -6,30 +6,27 @@ namespace PlantM.Models.PlantModels
     public class SpeciesLabel
     {
         [Key]
-        [Required]
         public string Name { get; set; }
 
-        [Required]
-        public CustomGroup CustomGroup { get; set; }
+        public virtual CustomGroup CustomGroup { get; set; }
 
         [Required]
-        public Family Family { get; set; }
+        public string CustomGroupName { get; set; }
+
+        public virtual Family Family { get; set; }
 
         [Required]
-        public Genus Genus { get; set; }
+        public string FamilyName { get; set; }
+
+        public virtual Genus Genus { get; set; }
 
         [Required]
-        public Species Species { get; set; }
-    }
+        public string GenusName { get; set; }
 
-    public class SpeciesLabelDbContext : DbContext
-    {
-        public SpeciesLabelDbContext()
-            : base("DefaultConnection")
-        {
+        public virtual Species Species { get; set; }
 
-        }
+        [Required]
+        public string SpeciesName { get; set; }
 
-        public DbSet<SpeciesLabel> SpeciesLabel { get; set; }
     }
 }

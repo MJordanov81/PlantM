@@ -11,15 +11,4 @@ namespace PlantM.Models.PlantModels
         [Index(IsUnique = true)]
         public string Name { get; set; }
     }
-
-    public class CustomGroupDbContext : DbContext
-    {
-        public CustomGroupDbContext()
-            : base("DefaultConnection")
-        {
-
-        }
-
-        public DbSet<CustomGroup> CustomGroup { get; set; }
-    }
 }
