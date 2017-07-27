@@ -1,0 +1,36 @@
+﻿@model IEnumerable<PlantM.Models.PlantModels.AcquisitionType>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Acquisition types</h2>
+
+<table class="table">
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.Name)</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.ActionLink("Delete", "Delete", new {id = item.Name})
+            </td>
+        </tr>
+    }
+
+</table>
+
+<div class="btn btn-default btn-custom">
+    @Html.ActionLink("Create New", "Create")
+</div>
+
+<div class="btn btn-default btn-custom">
+    @Html.ActionLink("Back Home", "Index", "Home")
+</div>
+
+

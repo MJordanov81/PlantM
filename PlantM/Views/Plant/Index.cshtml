@@ -1,0 +1,87 @@
+﻿@model IEnumerable<PlantM.Models.PlantModels.Plant>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CollectionNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AcquisitionTypeName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LocationName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SoilName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SpeciesLabelName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VendorName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Size)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateOfAcquisition)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Age)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PotType)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CollectionNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AcquisitionTypeName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LocationName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SoilName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SpeciesLabelName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VendorName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Size)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateOfAcquisition)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Age)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PotType)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new {id = item.CollectionNumber}) |
+            @Html.ActionLink("Details", "Details", new {id = item.CollectionNumber}) |
+            @Html.ActionLink("Delete", "Delete", new {id = item.CollectionNumber})
+        </td>
+    </tr>
+}
+
+</table>

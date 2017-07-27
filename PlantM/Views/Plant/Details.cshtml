@@ -1,0 +1,108 @@
+﻿@model PlantM.Models.PlantModels.Plant
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <img src="@Model.PhotoUrl" alt="Sample Photo" />
+    <h4>Plant @Model.CollectionNumber</h4>
+    <hr/>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AcquisitionTypeName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AcquisitionTypeName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LocationName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LocationName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SoilName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SoilName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SpeciesLabelName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SpeciesLabelName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VendorName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VendorName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Size)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Size)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateOfAcquisition)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateOfAcquisition)
+        </dd>
+        
+        <dt>
+            @Html.DisplayNameFor(model => model.LastRepottingDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastRepottingDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Age)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Age)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PotType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PotType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Comments)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Comments)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.CollectionNumber }) |
+    @Html.ActionLink("Repot", "Repot", new { id = Model.CollectionNumber }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

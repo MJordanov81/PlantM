@@ -6814,8 +6814,3 @@ td.visible-print {
     display: none !important;
   }
 }
-
-.errorMessageCust {
-    color: red;
-    font-size: larger
-}
