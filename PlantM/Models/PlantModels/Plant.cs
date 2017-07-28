@@ -49,8 +49,39 @@ namespace PlantM.Models.PlantModels
         [Display(Name = "Age")]
         [DisplayFormat(DataFormatString = "{0:f1}")]
         public double Age {
-            get { return (DateTime.Now - this.DateOfAcquisitionAsDate).TotalDays / 365 + this.AgeAtAcquisition; }
+            get
+            {
+                if (this.HasWithered && this.WitheredDate != null)
+                {
+                    return ((DateTime)this.WitheredDate - this.DateOfAcquisitionAsDate).TotalDays / 365 + this.AgeAtAcquisition;
+                }
+                else if (this.IsDeleted && this.DeletionDate != null)
+                {
+                    return ((DateTime)this.DeletionDate - this.DateOfAcquisitionAsDate).TotalDays / 365 + this.AgeAtAcquisition;
+                }
+                else
+                {
+                    return (DateTime.Now - this.DateOfAcquisitionAsDate).TotalDays / 365 + this.AgeAtAcquisition;
+                }
+
+            }
         }
+
+        [Display(Name = "Withered")]
+        public bool HasWithered { get; set; }
+
+        [Display(Name = "Wither reason")]
+        public string WitherReason { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
+        public DateTime? WitheredDate { get; set; }
+
+        [Display(Name = "Deleted")]
+        public bool IsDeleted { get; set; }
+
+        [Display(Name = "Date of deletion")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
+        public DateTime? DeletionDate { get; set; }
 
         [Required]
         [Display(Name = "Soil")]

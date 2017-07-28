@@ -17,3 +17,22 @@
     margin: 0 auto;
 }
 
+.label-inactive-plant {
+    background-color: crimson;
+    color: blanchedalmond;
+    padding: 10px;
+    border-radius: 10px            
+}
+
+.label-active-plant {
+    background-color: green;
+    color: blanchedalmond;
+    padding: 10px;
+    border-radius: 10px
+}
+
+.label-in-list {
+    font-size: smaller;
+    padding: 2px;
+}
+

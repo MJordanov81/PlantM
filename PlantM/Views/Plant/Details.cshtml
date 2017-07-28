@@ -8,8 +8,20 @@
     <div class="row">
 
         <div class="col-md-12 ">
-            <h2>@Model.CollectionNumber</h2>
-            <hr />
+            <div class="col-md-6">
+                <h2>@Model.CollectionNumber</h2>
+            </div>
+            <div class="col-md-6">
+                @if (@Model.HasWithered)
+                {
+                    @Html.Label($"Withered", new {@class = "label-inactive-plant"})
+                }
+                @if (@Model.IsDeleted)
+                {
+                    @Html.Label($"Deleted", new {@class = "label-inactive-plant"})
+                }
+            </div>
+            <hr/>
         </div>
 
         <div class="col-md-4">
@@ -115,8 +127,15 @@
             </div>
 
             <div class="col-md-12">
-                <button class="btn btn-default">@Html.ActionLink("Edit", "Edit", new { id = Model.CollectionNumber })</button>
-                <button class="btn btn-primary">@Html.ActionLink("Repot", "Repot", new { id = Model.CollectionNumber })</button>
+
+                @if (!Model.HasWithered && !Model.IsDeleted)
+                {
+                    <button class="btn btn-default">@Html.ActionLink("Edit", "Edit", new { id = Model.CollectionNumber })</button>
+                    <button class="btn btn-default">@Html.ActionLink("Relocate", "Relocate", new { id = Model.CollectionNumber })</button>
+                    <button class="btn btn-primary">@Html.ActionLink("Repot", "Repot", new { id = Model.CollectionNumber })</button>
+                    <button class="btn btn-primary">@Html.ActionLink("Wither", "Wither", new { id = Model.CollectionNumber })</button>
+                    <button class="btn btn-primary">@Html.ActionLink("Delete", "Delete", new { id = Model.CollectionNumber })</button>
+                }
                 <button class="btn btn-default">@Html.ActionLink("Back to List", "Index")</button>
             </div>
         </div>

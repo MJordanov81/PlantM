@@ -20,7 +20,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.SoilName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("SoilName", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("SoilName", null, htmlAttributes: new { @class = "form-control", @value = ""})
                 @Html.ValidationMessageFor(model => model.SoilName, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -28,7 +28,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.PotType, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.PotType, new {htmlAttributes = new { @class = "form-control" }})
+                @Html.EditorFor(model => model.PotType, new {htmlAttributes = new { @class = "form-control", @Value = ""}})
                 @Html.ValidationMessageFor(model => model.PotType, "", new { @class = "text-danger" })
             </div>
         </div>       

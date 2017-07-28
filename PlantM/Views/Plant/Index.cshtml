@@ -12,6 +12,9 @@
 <table class="table">
     <tr>
         <th>
+            @Html.DisplayName("Status")
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.CollectionNumber)
         </th>
         <th>
@@ -48,6 +51,20 @@
     {
         <tr>
             <td>
+                @if (item.IsDeleted)
+                {
+                    @Html.Label($"Deleted", new { @class = "label-inactive-plant label-in-list" })
+                }
+                else if (item.HasWithered)
+                {
+                    @Html.Label($"Withered", new { @class = "label-inactive-plant label-in-list" })
+                }
+                else
+                {
+                    @Html.Label($"Alive", new { @class = "label-active-plant label-in-list" })
+                }
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.CollectionNumber)
             </td>
             <td>
@@ -78,9 +95,7 @@
                 @Html.DisplayFor(modelItem => item.PotType)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.CollectionNumber }) |
-                @Html.ActionLink("Details", "Details", new { id = item.CollectionNumber }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.CollectionNumber })
+                @Html.ActionLink("Details", "Details", new {id = item.CollectionNumber})
             </td>
         </tr>
     }

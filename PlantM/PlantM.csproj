@@ -193,6 +193,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AcquisitionTypeController.cs" />
+    <Compile Include="Controllers\AdministratorController.cs" />
     <Compile Include="Controllers\CustomGroupController.cs" />
     <Compile Include="Controllers\FamilyController.cs" />
     <Compile Include="Controllers\GenusController.cs" />
@@ -314,9 +315,13 @@
     <Content Include="Views\Plant\Edit.cshtml" />
     <Content Include="Views\Plant\Index.cshtml" />
     <Content Include="Views\Plant\Repot.cshtml" />
+    <Content Include="Views\Plant\Wither.cshtml" />
+    <Content Include="Views\Administrator\Index.cshtml" />
+    <Content Include="Views\Plant\Relocate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Test\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

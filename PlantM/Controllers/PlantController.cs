@@ -101,26 +101,32 @@ namespace PlantM.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CollectionNumber,LocationName,SpeciesLabelName,Size,DateOfAcquisition,AcquisitionTypeName,VendorName,AgeAtAcquisition,SoilName,PotType,PhotoUrl,Comments")] Plant plant)
+        public ActionResult Edit([Bind(Include = "CollectionNumber,Size,PhotoUrl,Comments")] Plant plantChanged)
         {
-            plant.DateOfAcquisitionAsDate = db.Plant.Where(p => p.CollectionNumber == plant.CollectionNumber)
-                .Select(p => p.DateOfAcquisitionAsDate).FirstOrDefault();
+            Plant plant = db.Plant.FirstOrDefault(p => p.CollectionNumber == plantChanged.CollectionNumber);
 
-            plant.LastRepottingDate = db.Plant.Where(p => p.CollectionNumber == plant.CollectionNumber)
-                .Select(p => p.LastRepottingDate).FirstOrDefault();
+            if (plant != null)
+            {
+                plant.Size = plantChanged.Size;
+                plant.PhotoUrl = plantChanged.PhotoUrl;
+                plant.Comments = plantChanged.Comments;
+            }
 
-            if (ModelState.IsValid)
+            try
             {
                 db.Entry(plant).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.AcquisitionTypeName = new SelectList(db.AcquisitionType, "Name", "Name", plant.AcquisitionTypeName);
-            ViewBag.LocationName = new SelectList(db.Location, "Name", "Name", plant.LocationName);
-            ViewBag.SoilName = new SelectList(db.Soil, "Name", "Name", plant.SoilName);
-            ViewBag.SpeciesLabelName = new SelectList(db.SpeciesLabel, "Name", "Name", plant.SpeciesLabelName);
-            ViewBag.VendorName = new SelectList(db.Vendor, "Name", "Name", plant.VendorName);
-            return View(plant);
+            catch (Exception)
+            {
+                ViewBag.AcquisitionTypeName = new SelectList(db.AcquisitionType, "Name", "Name", plant.AcquisitionTypeName);
+                ViewBag.LocationName = new SelectList(db.Location, "Name", "Name", plant.LocationName);
+                ViewBag.SoilName = new SelectList(db.Soil, "Name", "Name", plant.SoilName);
+                ViewBag.SpeciesLabelName = new SelectList(db.SpeciesLabel, "Name", "Name", plant.SpeciesLabelName);
+                ViewBag.VendorName = new SelectList(db.Vendor, "Name", "Name", plant.VendorName);
+                return View(plant);
+            }
         }
 
         // GET: Plant/Delete/5
@@ -144,8 +150,17 @@ namespace PlantM.Controllers
         public ActionResult DeleteConfirmed(string id)
         {
             Plant plant = db.Plant.Find(id);
-            db.Plant.Remove(plant);
-            db.SaveChanges();
+
+            if (plant != null)
+            {
+                plant.DeletionDate = DateTime.Now;
+                plant.IsDeleted = true;
+
+                db.Entry(plant).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
             return RedirectToAction("Index");
         }
 
@@ -208,17 +223,102 @@ namespace PlantM.Controllers
                 .FirstOrDefault(s => s.Name == plant.SpeciesLabelName)
                 .CustomGroupName;
 
-            string customGroupFirstLetter = customGroupName[0].ToString();
+            string customGroupFirstLetterAbbr = customGroupName.Split('-')[0];
 
             int customGroupPlantCount = 0;
 
             if (db.Plant != null)
             {
                 customGroupPlantCount = db.Plant
-                    .Count(p => p.CollectionNumber.StartsWith(customGroupFirstLetter));
+                    .Count(p => p.CollectionNumber.StartsWith(customGroupFirstLetterAbbr));
             }
 
             return string.Format($"{customGroupName[0]}{customGroupName.Length}-{customGroupPlantCount + 1}");
+        }
+
+        //GET: Plant/Wither/5
+        public ActionResult Wither(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Plant plant = db.Plant.Find(id);
+            if (plant == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(plant);
+        }
+
+        // POST: Plant/Wither/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Wither([Bind(Include = "CollectionNumber,WitherReason")] Plant plantChanged)
+        {
+            Plant plant = db.Plant.FirstOrDefault(p => p.CollectionNumber == plantChanged.CollectionNumber);
+
+            if (plant != null)
+            {
+                plant.WitherReason = plantChanged.WitherReason;
+                plant.HasWithered = true;
+                plant.WitheredDate = DateTime.Now;
+            }
+
+            try
+            {
+                db.Entry(plant).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch (Exception)
+            {
+                ViewBag.SoilName = new SelectList(db.Soil, "Name", "Desription");
+                return View(plant);
+            }
+        }
+
+        //GET: Plant/Relocate/5
+        public ActionResult Relocate(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Plant plant = db.Plant.Find(id);
+            if (plant == null)
+            {
+                return HttpNotFound();
+            }
+
+            ViewBag.LocationName = new SelectList(db.Location, "Name", "Name");
+            return View(plant);
+        }
+
+        // POST: Plant/Relocate/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Relocate([Bind(Include = "CollectionNumber,LocationName")] Plant plantChanged)
+        {
+            Plant plant = db.Plant.FirstOrDefault(p => p.CollectionNumber == plantChanged.CollectionNumber);
+
+            if (plant != null)
+            {
+                plant.LocationName = plantChanged.LocationName;
+            }
+
+            try
+            {
+                db.Entry(plant).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch (Exception)
+            {
+                ViewBag.SoilName = new SelectList(db.Soil, "Name", "Desription");
+                return View(plant);
+            }
         }
     }
 }
