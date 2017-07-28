@@ -4,105 +4,123 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<div class="container">
+    <div class="row">
 
-<div>
-    <img src="@Model.PhotoUrl" alt="Sample Photo" />
-    <h4>Plant @Model.CollectionNumber</h4>
-    <hr/>
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.AcquisitionTypeName)
-        </dt>
+        <div class="col-md-12 ">
+            <h2>@Model.CollectionNumber</h2>
+            <hr />
+        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.AcquisitionTypeName)
-        </dd>
+        <div class="col-md-4">
+            <img src="@Model.PhotoUrl" class="img-responsive" alt="Sample Photo" />
+        </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.LocationName)
-        </dt>
+        <div class="col-md-8">
+            <div class="col-md-6">
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.AcquisitionTypeName)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.LocationName)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.AcquisitionTypeName)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.SoilName)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.LocationName)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.SoilName)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.LocationName)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.SpeciesLabelName)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.SoilName)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.SpeciesLabelName)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.SoilName)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.VendorName)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.SpeciesLabelName)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.VendorName)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.SpeciesLabelName)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Size)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.VendorName)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Size)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.VendorName)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DateOfAcquisition)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Size)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.DateOfAcquisition)
-        </dd>
-        
-        <dt>
-            @Html.DisplayNameFor(model => model.LastRepottingDate)
-        </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Size)
+                    </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.LastRepottingDate)
-        </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.DateOfAcquisition)
+                    </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Age)
-        </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.DateOfAcquisition)
+                    </dd>
+                </dl>
+            </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Age)
-        </dd>
+            <div class="col-md-6">
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.LastRepottingDate)
+                    </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.PotType)
-        </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.LastRepottingDate)
+                    </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.PotType)
-        </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Age)
+                    </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Comments)
-        </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Age)
+                    </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Comments)
-        </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.PotType)
+                    </dt>
 
-    </dl>
+                    <dd>
+                        @Html.DisplayFor(model => model.PotType)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Comments)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Comments)
+                    </dd>
+
+                </dl>
+            </div>
+
+            <div class="col-md-12">
+                <button class="btn btn-default">@Html.ActionLink("Edit", "Edit", new { id = Model.CollectionNumber })</button>
+                <button class="btn btn-primary">@Html.ActionLink("Repot", "Repot", new { id = Model.CollectionNumber })</button>
+                <button class="btn btn-default">@Html.ActionLink("Back to List", "Index")</button>
+            </div>
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.CollectionNumber }) |
-    @Html.ActionLink("Repot", "Repot", new { id = Model.CollectionNumber }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+

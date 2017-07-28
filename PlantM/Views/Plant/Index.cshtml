@@ -44,44 +44,45 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.CollectionNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AcquisitionTypeName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LocationName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SoilName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SpeciesLabelName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.VendorName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Size)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DateOfAcquisition)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Age)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PotType)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new {id = item.CollectionNumber}) |
-            @Html.ActionLink("Details", "Details", new {id = item.CollectionNumber}) |
-            @Html.ActionLink("Delete", "Delete", new {id = item.CollectionNumber})
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CollectionNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AcquisitionTypeName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LocationName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SoilName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SpeciesLabelName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VendorName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Size)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateOfAcquisition)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Age)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PotType)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.CollectionNumber }) |
+                @Html.ActionLink("Details", "Details", new { id = item.CollectionNumber }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.CollectionNumber })
+            </td>
+        </tr>
+    }
 
 </table>
