@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using PlantM.Constants;
 using PlantM.Models;
 using PlantM.Models.PlantModels;
 
@@ -21,7 +24,6 @@ namespace PlantM.Controllers
         // GET: Administrator/TestEntities
         public ActionResult TestEntities()
         {
-
             Plant testPlant = db.Plant.FirstOrDefault(p => p.CollectionNumber == "TestPlant1");
 
             if (testPlant == null)
@@ -53,11 +55,12 @@ namespace PlantM.Controllers
                 testSpecies1.Name = "Test species";
 
                 SpeciesLabel testSpeciesLabel1 = new SpeciesLabel();
-                testSpeciesLabel1.Name = string.Format($"{testGenus1.Name} - {testSpecies1.Name}");
                 testSpeciesLabel1.CustomGroupName = testCustomGroup1.Name;
                 testSpeciesLabel1.FamilyName = testFamily1.Name;
                 testSpeciesLabel1.GenusName = testGenus1.Name;
                 testSpeciesLabel1.SpeciesName = testSpecies1.Name;
+                testSpeciesLabel1.FieldNumber = "T111";
+                testSpeciesLabel1.Name = string.Format($"{testGenus1.Name} - {testSpecies1.Name} - {testSpeciesLabel1.FieldNumber}");
 
                 Plant testPlant1 = new Plant();
                 testPlant1.LocationName = testLocation1.Name;
@@ -90,9 +93,10 @@ namespace PlantM.Controllers
                 {
                     db.SaveChanges();
                 }
-                catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
+                catch (Exception)
                 {
-
+                    ViewBag.Message = "Problem encountered with creating test entities!";
+                    return View("Index");
                 }
 
                 ViewBag.Message = "Test entities have been created!";
@@ -102,6 +106,40 @@ namespace PlantM.Controllers
 
             ViewBag.Message = "Test entities have already been created!";
             return View("Index");
+        }
+
+        // GET: Administrator/ExportPlants
+        public ActionResult ExportPlants()
+        {
+            return View();
+        }
+
+        // POST: Administrator/ExportPlants
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ExportPlants(string fileName)
+        {
+            ExportPlantsData(fileName);
+
+            return RedirectToAction("Index", "Administrator");
+        }
+
+        public void ExportPlantsData(string fileName)
+        {
+            var plants = db.Plant.ToList();
+            StringBuilder sb = new StringBuilder();
+
+            sb.AppendLine(PlantConstants.ExportHeader);
+            foreach (var plant in plants)
+            {
+                sb.AppendLine(plant.ToString());
+            }
+
+            Response.ClearContent();
+            Response.AddHeader("content-disposition", $"attachment;filename={fileName}.txt");
+            Response.ContentType = "text/csv";
+            Response.Write(sb.ToString());
+            Response.End();
         }
     }
 }

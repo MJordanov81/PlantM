@@ -6,7 +6,7 @@ namespace PlantM.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("Index", "Plant");
         }
 
         public ActionResult About()

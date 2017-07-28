@@ -36,3 +36,11 @@
     padding: 2px;
 }
 
+
+label.label-plant-number {
+    background-color: blueviolet;
+    color: blanchedalmond;
+    padding: 10px;
+    border-radius: 10px
+}
+

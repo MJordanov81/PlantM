@@ -4,12 +4,7 @@
     ViewBag.Title = "Index";
 }
 
-<ul class="nav navbar-nav">
-    <li>@Html.ActionLink("Acquisition type", "Index", "AcquisitionType")</li>
-
-</ul>
-
-<h2>Index</h2>
+<h2>Vendors</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -25,20 +20,24 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.WebSite)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new {id = item.Name}) |
-            @Html.ActionLink("Details", "Details", new {id = item.Name}) |
-            @Html.ActionLink("Delete", "Delete", new {id = item.Name})
-        </td>
-    </tr>
-}
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WebSite)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new {id = item.Name}) |
+                @Html.ActionLink("Details", "Details", new {id = item.Name}) |
+                @Html.ActionLink("Delete", "Delete", new {id = item.Name})
+            </td>
+        </tr>
+    }
 
 </table>
+
+<button class="btn btn-primary">@Html.ActionLink("Acquisition types", "Index", "AcquisitionType")</button>
+<button class="btn btn-default">@Html.ActionLink("Back to List", "Index", "Plant")</button>
+

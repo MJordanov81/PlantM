@@ -26,7 +26,6 @@ namespace PlantM
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrapCustom.css",
                       "~/Content/site.css", "~/Content/custom.css"));
-
         }
     }
 }

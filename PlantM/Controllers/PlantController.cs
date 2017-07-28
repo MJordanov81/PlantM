@@ -1,14 +1,14 @@
-﻿using System;
+﻿using PagedList;
+using PlantM.Models;
+using PlantM.Models.PlantModels;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Reflection;
-using System.Web;
 using System.Web.Mvc;
-using PlantM.Models;
-using PlantM.Models.PlantModels;
+using PlantM.Constants;
 
 namespace PlantM.Controllers
 {
@@ -18,10 +18,35 @@ namespace PlantM.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Plant
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.CollectionNumberSortParam = String.IsNullOrEmpty(sortOrder) ? "colNum_desc" : "";
+            ViewBag.LocationSortParam = sortOrder == "location_desc" ? "location_asc" : "location_desc";
+            ViewBag.SpeciesLabelParam = sortOrder == "specLab_desc" ? "specLab_asc" : "specLab_desc";
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
             var plant = db.Plant.Include(p => p.AcquisitionType).Include(p => p.Location).Include(p => p.Soil).Include(p => p.SpeciesLabel).Include(p => p.Vendor);
-            return View(plant.ToList());
+
+            IQueryable<Plant> plantSorted;
+            SortPlantList(sortOrder, plant, out plantSorted);
+
+            List<Plant> plantFiltered;
+            FilterPlantList(searchString, plantSorted, out plantFiltered);
+
+            int pageSize = PlantConstants.PlantIndexPageSize;
+            int pageNumber = (page ?? 1);
+            return View(plantFiltered.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Plant/Details/5
@@ -223,17 +248,19 @@ namespace PlantM.Controllers
                 .FirstOrDefault(s => s.Name == plant.SpeciesLabelName)
                 .CustomGroupName;
 
-            string customGroupFirstLetterAbbr = customGroupName.Split('-')[0];
+            string customGroupFirstLetter = customGroupName[0].ToString();
+            string customGroupNumberOfLetters = customGroupName.Length.ToString();
+            string customGroup = customGroupFirstLetter + customGroupNumberOfLetters;
 
             int customGroupPlantCount = 0;
 
             if (db.Plant != null)
             {
                 customGroupPlantCount = db.Plant
-                    .Count(p => p.CollectionNumber.StartsWith(customGroupFirstLetterAbbr));
+                    .Count(p => p.CollectionNumber.StartsWith(customGroup));
             }
 
-            return string.Format($"{customGroupName[0]}{customGroupName.Length}-{customGroupPlantCount + 1}");
+            return string.Format($"{customGroup}-{customGroupPlantCount + 1}");
         }
 
         //GET: Plant/Wither/5
@@ -319,6 +346,69 @@ namespace PlantM.Controllers
                 ViewBag.SoilName = new SelectList(db.Soil, "Name", "Desription");
                 return View(plant);
             }
+        }
+        private void SortPlantList(string sortOrder, IQueryable<Plant> plant, out IQueryable<Plant> plantSorted)
+        {
+            switch (sortOrder)
+            {
+                case "colNum_desc":
+                    plantSorted = plant.OrderBy(p => p.CollectionNumber);
+                    break;
+                case "location_asc":
+                    plantSorted = plant.OrderByDescending(p => p.LocationName);
+                    break;
+                case "location_desc":
+                    plantSorted = plant.OrderBy(p => p.LocationName);
+                    break;
+                case "specLab_asc":
+                    plantSorted = plant.OrderByDescending(p => p.SpeciesLabelName);
+                    break;
+                case "specLab_desc":
+                    plantSorted = plant.OrderBy(p => p.SpeciesLabelName);
+                    break;
+                default:
+                    plantSorted = plant.OrderByDescending(p => p.CollectionNumber);
+                    break;
+            }
+        }
+
+        private void FilterPlantList(string searchString, IQueryable<Plant> plantSorted, out List<Plant> plantFiltered)
+        {
+            if (String.IsNullOrEmpty(searchString))
+            {
+                plantFiltered = new List<Plant>(plantSorted);
+                return;
+            }
+            if (searchString.ToLower() == "withered")
+            {
+                plantFiltered = plantSorted.Where(p => p.HasWithered == true).ToList();
+                return;
+            }
+            if (searchString.ToLower() == "deleted")
+            {
+                plantFiltered = plantSorted.Where(p => p.IsDeleted == true).ToList();
+                return;
+            }
+            if (searchString.ToLower() == "alive")
+            {
+                plantFiltered = plantSorted.Where(p => p.IsDeleted == false && p.HasWithered == false).ToList();
+                return;
+            }
+
+            HashSet<Plant> plants = new HashSet<Plant>();
+
+            searchString = searchString.ToLower();
+
+            plants.UnionWith(plantSorted.Where(p => p.CollectionNumber.ToLower().Contains(searchString)));
+            plants.UnionWith(plantSorted.Where(p => p.AcquisitionTypeName.ToLower().Contains(searchString)));
+            plants.UnionWith(plantSorted.Where(p => p.LocationName.ToLower().Contains(searchString)));
+            plants.UnionWith(plantSorted.Where(p => p.SoilName.ToLower().Contains(searchString)));
+            plants.UnionWith(plantSorted.Where(p => p.SpeciesLabelName.ToLower().Contains(searchString)));
+            plants.UnionWith(plantSorted.Where(p => p.VendorName.ToLower().Contains(searchString)));
+            plants.UnionWith(plantSorted.Where(p => p.DateOfAcquisition.ToLower().Contains(searchString)));
+            plants.UnionWith(plantSorted.Where(p => p.PotType.ToLower().Contains(searchString)));
+
+            plantFiltered = new List<Plant>(plants);
         }
     }
 }

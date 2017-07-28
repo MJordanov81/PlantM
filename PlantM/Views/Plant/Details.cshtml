@@ -9,7 +9,7 @@
 
         <div class="col-md-12 ">
             <div class="col-md-6">
-                <h2>@Model.CollectionNumber</h2>
+                <h2>@Html.Label(Model.CollectionNumber, new {@class = "label-plant-number" }) @Model.SpeciesLabelName</h2>
             </div>
             <div class="col-md-6">
                 @if (@Model.HasWithered)
@@ -30,15 +30,7 @@
 
         <div class="col-md-8">
             <div class="col-md-6">
-                <dl class="dl-horizontal">
-                    <dt>
-                        @Html.DisplayNameFor(model => model.AcquisitionTypeName)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.AcquisitionTypeName)
-                    </dd>
-
+                <dl class="dl-horizontal">                   
                     <dt>
                         @Html.DisplayNameFor(model => model.LocationName)
                     </dt>
@@ -46,7 +38,9 @@
                     <dd>
                         @Html.DisplayFor(model => model.LocationName)
                     </dd>
-
+                    
+                    <hr>
+                    
                     <dt>
                         @Html.DisplayNameFor(model => model.SoilName)
                     </dt>
@@ -54,59 +48,7 @@
                     <dd>
                         @Html.DisplayFor(model => model.SoilName)
                     </dd>
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.SpeciesLabelName)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.SpeciesLabelName)
-                    </dd>
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.VendorName)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.VendorName)
-                    </dd>
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Size)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.Size)
-                    </dd>
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.DateOfAcquisition)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.DateOfAcquisition)
-                    </dd>
-                </dl>
-            </div>
-
-            <div class="col-md-6">
-                <dl class="dl-horizontal">
-                    <dt>
-                        @Html.DisplayNameFor(model => model.LastRepottingDate)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.LastRepottingDate)
-                    </dd>
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Age)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.Age)
-                    </dd>
-
+                    
                     <dt>
                         @Html.DisplayNameFor(model => model.PotType)
                     </dt>
@@ -116,13 +58,68 @@
                     </dd>
 
                     <dt>
+                        @Html.DisplayNameFor(model => model.LastRepottingDate)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.LastRepottingDate)
+                    </dd>
+                    
+                    <hr>
+                    
+                    <dt>
+                        @Html.DisplayNameFor(model => model.DateOfAcquisition)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.DateOfAcquisition)
+                    </dd>
+                                                                          
+                    <dt>
+                        @Html.DisplayNameFor(model => model.AcquisitionTypeName)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.AcquisitionTypeName)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.VendorName)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.VendorName)
+                    </dd>                 
+                </dl>
+            </div>
+
+            <div class="col-md-6">
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Age)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Age)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Size)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Size)
+                    </dd>
+                    
+                    <hr>
+
+                    <dt>
                         @Html.DisplayNameFor(model => model.Comments)
                     </dt>
 
                     <dd>
                         @Html.DisplayFor(model => model.Comments)
                     </dd>
-
                 </dl>
             </div>
 
@@ -130,8 +127,8 @@
 
                 @if (!Model.HasWithered && !Model.IsDeleted)
                 {
-                    <button class="btn btn-default">@Html.ActionLink("Edit", "Edit", new { id = Model.CollectionNumber })</button>
-                    <button class="btn btn-default">@Html.ActionLink("Relocate", "Relocate", new { id = Model.CollectionNumber })</button>
+                    <button class="btn btn-primary">@Html.ActionLink("Edit", "Edit", new { id = Model.CollectionNumber })</button>
+                    <button class="btn btn-primary">@Html.ActionLink("Relocate", "Relocate", new { id = Model.CollectionNumber })</button>
                     <button class="btn btn-primary">@Html.ActionLink("Repot", "Repot", new { id = Model.CollectionNumber })</button>
                     <button class="btn btn-primary">@Html.ActionLink("Wither", "Wither", new { id = Model.CollectionNumber })</button>
                     <button class="btn btn-primary">@Html.ActionLink("Delete", "Delete", new { id = Model.CollectionNumber })</button>

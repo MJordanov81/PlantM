@@ -6,7 +6,7 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Soil mixes</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -22,20 +22,22 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Desription, new { maxlength = 20 })
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new {id = item.Name}) |
-            @Html.ActionLink("Details", "Details", new {id = item.Name}) |
-            @Html.ActionLink("Delete", "Delete", new {id = item.Name})
-        </td>
-    </tr>
-}
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Desription, new { maxlength = 20 })
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new {id = item.Name}) |
+                @Html.ActionLink("Details", "Details", new {id = item.Name}) |
+                @Html.ActionLink("Delete", "Delete", new {id = item.Name})
+            </td>
+        </tr>
+    }
 
 </table>
+
+<button class="btn btn-primary">@Html.ActionLink("Back to List", "Index", "Plant")</button>

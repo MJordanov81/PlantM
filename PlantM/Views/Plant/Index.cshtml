@@ -1,48 +1,59 @@
-﻿@model IEnumerable<PlantM.Models.PlantModels.Plant>
+﻿@model PagedList.IPagedList<PlantM.Models.PlantModels.Plant>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Plants</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+
+@using (Html.BeginForm("Index", "Plant", FormMethod.Get))
+{
+    <p>
+        Search: @Html.TextBox("searchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Search" />
+    </p>
+}
+
 <table class="table">
     <tr>
         <th>
             @Html.DisplayName("Status")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CollectionNumber)
+            @Html.ActionLink("Collection No.", "Index", "Plant", new { sortOrder = ViewBag.CollectionNumberSortParam, currentFilter = ViewBag.CurrentFilter }, new{ })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.AcquisitionTypeName)
+            @Html.DisplayNameFor(model => model[0].AcquisitionTypeName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.LocationName)
+            @Html.ActionLink("Location", "Index", "Plant", new { sortOrder = ViewBag.LocationSortParam, currentFilter = ViewBag.CurrentFilter }, new { })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.SoilName)
+            @Html.DisplayNameFor(model => model[0].SoilName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.SpeciesLabelName)
+            @Html.ActionLink("Species label", "Index", "Plant", new { sortOrder = ViewBag.SpeciesLabelParam, currentFilter = ViewBag.CurrentFilter }, new { })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.VendorName)
+            @Html.DisplayNameFor(model => model[0].VendorName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Size)
+            @Html.DisplayNameFor(model => model[0].Size)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DateOfAcquisition)
+            @Html.DisplayNameFor(model => model[0].DateOfAcquisition)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Age)
+            @Html.DisplayNameFor(model => model[0].Age)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.PotType)
+            @Html.DisplayNameFor(model => model[0].PotType)
         </th>
         <th></th>
     </tr>
@@ -101,3 +112,9 @@
     }
 
 </table>
+
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

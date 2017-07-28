@@ -104,5 +104,29 @@ namespace PlantM.Models.PlantModels
         public virtual AcquisitionType AcquisitionType { get; set; }
         public virtual Vendor Vendor { get; set; }
         public virtual Soil Soil { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format(
+                $"{this.CollectionNumber}\t" +
+                $"{this.LocationName}\t" +
+                $"{this.SpeciesLabelName}\t" +
+                $"{this.Size}\t" +
+                $"{this.DateOfAcquisition}\t" +
+                $"{this.LastRepottingDate}\t" +
+                $"{this.AcquisitionTypeName}\t" +
+                $"{this.VendorName}\t" +
+                $"{this.AgeAtAcquisition}\t" +
+                $"{this.Age}\t" +
+                $"{this.HasWithered}\t" +
+                $"{this.WitherReason}\t" +
+                $"{this.WitheredDate}\t" +
+                $"{this.IsDeleted}\t" +
+                $"{this.DeletionDate}\t" +
+                $"{this.SoilName}\t" +
+                $"{this.PotType}\t" +
+                $"{this.PhotoUrl}\t" +
+                $"{this.Comments}\t");
+        }
     }
 }

@@ -1,27 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Net.Mime;
-using System.Web;
-using System.Web.Mvc;
 using PlantM.Models;
 using PlantM.Models.PlantModels;
+using System.Web.Mvc;
 
 namespace PlantM.Controllers
 {
-        [Authorize]
+    [Authorize]
     public class SpeciesLabelController : Controller
     {
+        ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: SpeciesLabel
         [HttpGet]
         public ActionResult Create(string confirmationMessage)
         {
-            ViewBag.CustomGroupList = GetCustomGroups();
-            ViewBag.FamilyList = GetFamilies();
-            ViewBag.GenusList = GetGenera();
-            ViewBag.SpeciesList = GetSpecies();
+            ViewBag.CustomGroupList = new SelectList(db.CustomGroup, "Name", "Name");
+            ViewBag.FamilyList = new SelectList(db.Family, "Name", "Name");
+            ViewBag.GenusList = new SelectList(db.Genus, "Name", "Name");
+            ViewBag.SpeciesList = new SelectList(db.Species, "Name", "Name");
             ViewBag.Message = confirmationMessage;
 
             return View();
@@ -30,29 +26,49 @@ namespace PlantM.Controllers
         // POST: SpeciesLabel/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CustomGroupName,FamilyName,GenusName,SpeciesName")] SpeciesLabel speciesLabel)
+        public ActionResult Create([Bind(Include = "CustomGroupName,FamilyName,GenusName,SpeciesName,FieldNumber")] SpeciesLabel speciesLabel)
         {
             if (ModelState.IsValid)
             {
                 using (var db = new ApplicationDbContext())
                 {
-                    speciesLabel.Name = string.Format($"{speciesLabel.GenusName} - {speciesLabel.SpeciesName}");
+                    if (speciesLabel.FieldNumber != null)
+                    {
+                        speciesLabel.Name =
+                            string.Format(
+                                $"{speciesLabel.GenusName} - {speciesLabel.SpeciesName} - {speciesLabel.FieldNumber}");
+                    }
+                    else
+                    {
+                        speciesLabel.Name = 
+                            string.Format(
+                                $"{speciesLabel.GenusName} - {speciesLabel.SpeciesName}");
+                    }
 
                     db.SpeciesLabel.Add(speciesLabel);
-                    db.SaveChanges();
+
+                    try
+                    {
+                        db.SaveChanges();
+                    }
+                    catch (Exception e)
+                    {
+                        return RedirectToAction("Create", new { confirmationMessage = $"Label '{speciesLabel.Name}' has been created!" });
+                    }
+
                     return RedirectToAction("Create", new { confirmationMessage = $"Label '{speciesLabel.Name}' has been created!" });
                 }
             }
 
-            ViewBag.CustomGroupList = GetCustomGroups();
-            ViewBag.FamilyList = GetFamilies();
-            ViewBag.GenusList = GetGenera();
-            ViewBag.SpeciesList = GetSpecies();
+            ViewBag.CustomGroupList = new SelectList(db.CustomGroup, "Name", "Name");
+            ViewBag.FamilyList = new SelectList(db.Family, "Name", "Name");
+            ViewBag.GenusList = new SelectList(db.Genus, "Name", "Name");
+            ViewBag.SpeciesList = new SelectList(db.Species, "Name", "Name");
 
             return View();
         }
 
-        private List<SelectListItem> GetCustomGroups()
+        /*private List<SelectListItem> GetCustomGroups()
         {
             using (var db = new ApplicationDbContext())
             {
@@ -134,14 +150,14 @@ namespace PlantM.Controllers
 
                 return species;
             }
-        }
+        }*/
     }
 
-    public class SpeciesLabelAttributes
+/*    public class SpeciesLabelAttributes
     {
         public string CustomGroupName { get; set; }
         public string FamilyName { get; set; }
         public string GenusName { get; set; }
         public string SpeciesName { get; set; }
-    }
+    }*/
 }
