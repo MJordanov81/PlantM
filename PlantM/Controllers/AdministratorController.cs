@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Metadata.Edm;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,7 @@ using PlantM.Models.PlantModels;
 
 namespace PlantM.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AdministratorController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -22,7 +24,7 @@ namespace PlantM.Controllers
         }
 
         // GET: Administrator/TestEntities
-        public ActionResult TestEntities()
+        public ActionResult CreateTestEntities()
         {
             Plant testPlant = db.Plant.FirstOrDefault(p => p.CollectionNumber == "TestPlant1");
 
@@ -111,20 +113,12 @@ namespace PlantM.Controllers
         // GET: Administrator/ExportPlants
         public ActionResult ExportPlants()
         {
-            return View();
-        }
-
-        // POST: Administrator/ExportPlants
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult ExportPlants(string fileName)
-        {
-            ExportPlantsData(fileName);
+            ExportPlantsData();
 
             return RedirectToAction("Index", "Administrator");
         }
 
-        public void ExportPlantsData(string fileName)
+        public void ExportPlantsData()
         {
             var plants = db.Plant.ToList();
             StringBuilder sb = new StringBuilder();
@@ -136,10 +130,57 @@ namespace PlantM.Controllers
             }
 
             Response.ClearContent();
-            Response.AddHeader("content-disposition", $"attachment;filename={fileName}.txt");
+            Response.AddHeader("content-disposition", $"attachment;filename=plantDbExport" + $"{DateTime.Now:yyyy-MM-dd}" + ".txt");
             Response.ContentType = "text/csv";
             Response.Write(sb.ToString());
             Response.End();
+        }
+
+        // GET: Administrator/EmptyTable
+        public ActionResult EmptyTable()
+        {
+            ViewBag.Tables = GetDbTablesNames();
+            return View();
+        }
+
+        // POST: Administrator/EmptyTable
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EmptyTable(string tables)
+        {
+
+            ViewBag.Message = EmptyTableByName(tables);
+            ViewBag.Tables = GetDbTablesNames();
+            return View();
+        }
+
+        private string EmptyTableByName(string tables)
+        {
+            string message = $"Table {tables} has been succesfully emptied!";
+            try
+            {
+                db.Database.ExecuteSqlCommand($"DELETE FROM {tables}");
+            }
+            catch (Exception e)
+            {
+                message = e.Message;
+
+            }
+
+
+            return message;
+        }
+
+        private SelectList GetDbTablesNames()
+        {
+            Dictionary<string, string> tables = new Dictionary<string, string>();
+
+            foreach (var table in Enum.GetNames(typeof(DbConstants.DbTables)))
+            {
+                tables.Add(table, table);
+            }
+
+            return new SelectList(tables, "Key", "Value");
         }
     }
 }

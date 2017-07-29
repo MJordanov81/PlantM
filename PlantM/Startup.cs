@@ -9,6 +9,7 @@ namespace PlantM
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
+            CreateRolesandUsers();
         }
     }
 }

@@ -34,6 +34,7 @@ namespace PlantM.Controllers
         }
 
         // GET: Soil/Create
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             return View();
@@ -44,6 +45,7 @@ namespace PlantM.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult Create([Bind(Include = "Name,Desription")] Soil soil)
         {
             if (ModelState.IsValid)
@@ -57,6 +59,7 @@ namespace PlantM.Controllers
         }
 
         // GET: Soil/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(string id)
         {
             if (id == null)
@@ -76,6 +79,7 @@ namespace PlantM.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit([Bind(Include = "Name,Desription")] Soil soil)
         {
             if (ModelState.IsValid)
@@ -88,6 +92,7 @@ namespace PlantM.Controllers
         }
 
         // GET: Soil/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(string id)
         {
             if (id == null)
@@ -105,6 +110,7 @@ namespace PlantM.Controllers
         // POST: Soil/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult DeleteConfirmed(string id)
         {
             Soil soil = db.Soil.Find(id);

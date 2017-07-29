@@ -65,6 +65,7 @@ namespace PlantM.Controllers
         }
 
         // GET: Plant/Create
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             ViewBag.AcquisitionTypeName = new SelectList(db.AcquisitionType, "Name", "Name");
@@ -80,6 +81,7 @@ namespace PlantM.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult Create([Bind(Include = "LocationName,SpeciesLabelName,Size,DateOfAcquisition,AcquisitionTypeName,VendorName,AgeAtAcquisition,SoilName,PotType,PhotoUrl,Comments")] Plant plant)
         {
             plant.CollectionNumber = GetCollectionNumber(plant);
@@ -102,6 +104,7 @@ namespace PlantM.Controllers
         }
 
         // GET: Plant/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(string id)
         {
             if (id == null)
@@ -126,6 +129,7 @@ namespace PlantM.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit([Bind(Include = "CollectionNumber,Size,PhotoUrl,Comments")] Plant plantChanged)
         {
             Plant plant = db.Plant.FirstOrDefault(p => p.CollectionNumber == plantChanged.CollectionNumber);
@@ -155,6 +159,7 @@ namespace PlantM.Controllers
         }
 
         // GET: Plant/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(string id)
         {
             if (id == null)
@@ -172,6 +177,7 @@ namespace PlantM.Controllers
         // POST: Plant/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult DeleteConfirmed(string id)
         {
             Plant plant = db.Plant.Find(id);
@@ -199,6 +205,7 @@ namespace PlantM.Controllers
         }
 
         //GET: Plant/Repot/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Repot(string id)
         {
             if (id == null)
@@ -218,6 +225,7 @@ namespace PlantM.Controllers
         // POST: Plant/Repot/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult Repot([Bind(Include = "CollectionNumber,SoilName,PotType")] Plant plantChanged)
         {
             Plant plant = db.Plant.FirstOrDefault(p => p.CollectionNumber == plantChanged.CollectionNumber);
@@ -242,6 +250,7 @@ namespace PlantM.Controllers
         }
 
         //Returns plant's collection number depending on plant's CustomGroup
+        [Authorize(Roles = "Admin")]
         private string GetCollectionNumber(Plant plant)
         {
             string customGroupName = db.SpeciesLabel
@@ -264,6 +273,7 @@ namespace PlantM.Controllers
         }
 
         //GET: Plant/Wither/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Wither(string id)
         {
             if (id == null)
@@ -282,6 +292,7 @@ namespace PlantM.Controllers
         // POST: Plant/Wither/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult Wither([Bind(Include = "CollectionNumber,WitherReason")] Plant plantChanged)
         {
             Plant plant = db.Plant.FirstOrDefault(p => p.CollectionNumber == plantChanged.CollectionNumber);
@@ -307,6 +318,7 @@ namespace PlantM.Controllers
         }
 
         //GET: Plant/Relocate/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Relocate(string id)
         {
             if (id == null)
@@ -326,6 +338,7 @@ namespace PlantM.Controllers
         // POST: Plant/Relocate/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult Relocate([Bind(Include = "CollectionNumber,LocationName")] Plant plantChanged)
         {
             Plant plant = db.Plant.FirstOrDefault(p => p.CollectionNumber == plantChanged.CollectionNumber);

@@ -4,7 +4,7 @@ using PlantM.Models.PlantModels;
 
 namespace PlantM.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class GenusController : Controller
     {
 /*        GenusDbContext db = new GenusDbContext();*/

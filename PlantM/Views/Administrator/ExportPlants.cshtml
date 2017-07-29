@@ -1,0 +1,33 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Export plants DB</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="container">
+            <div class="form-inline col-md-12">
+                <div class="form-group col-md-3 form-inline">
+                    @Html.Label("File name", htmlAttributes: new { @class = "control-label" })
+                    <input type="text" name="fileName"/>
+                </div>
+                <div class="form-group col-md-6">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Create" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back", "Index", "Administrator")
+</div>
+
+

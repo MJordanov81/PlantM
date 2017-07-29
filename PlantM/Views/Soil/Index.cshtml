@@ -1,5 +1,6 @@
 ﻿@using System.ComponentModel.DataAnnotations
 @using System.Web.UI.WebControls
+@using PlantM.Helpers
 @model IEnumerable<PlantM.Models.PlantModels.Soil>
 
 @{
@@ -9,7 +10,7 @@
 <h2>Soil mixes</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create").If(User.IsInRole("Admin"))
 </p>
 <table class="table">
     <tr>
@@ -31,9 +32,9 @@
                 @Html.DisplayFor(modelItem => item.Desription, new { maxlength = 20 })
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new {id = item.Name}) |
+                @Html.ActionLink("Edit", "Edit", new {id = item.Name}).If(User.IsInRole("Admin")) |
                 @Html.ActionLink("Details", "Details", new {id = item.Name}) |
-                @Html.ActionLink("Delete", "Delete", new {id = item.Name})
+                @Html.ActionLink("Delete", "Delete", new {id = item.Name}).If(User.IsInRole("Admin"))
             </td>
         </tr>
     }

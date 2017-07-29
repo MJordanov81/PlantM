@@ -1,5 +1,6 @@
 ﻿@model PagedList.IPagedList<PlantM.Models.PlantModels.Plant>
 @using PagedList.Mvc;
+@using PlantM.Helpers
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
@@ -9,7 +10,7 @@
 <h2>Plants</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create").If(User.IsInRole("Admin"))
 </p>
 
 @using (Html.BeginForm("Index", "Plant", FormMethod.Get))
@@ -112,6 +113,8 @@
     }
 
 </table>
+
+
 
 <br />
 Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount

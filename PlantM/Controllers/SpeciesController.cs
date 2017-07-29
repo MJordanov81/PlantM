@@ -8,7 +8,7 @@ using PlantM.Models.PlantModels;
 
 namespace PlantM.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class SpeciesController : Controller
     {
 /*        SpeciesDbContext db = new SpeciesDbContext();*/

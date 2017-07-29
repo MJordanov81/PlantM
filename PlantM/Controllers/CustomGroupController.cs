@@ -1,13 +1,13 @@
-﻿using PlantM.Models.PlantModels;
+﻿using System;
+using PlantM.Models.PlantModels;
 using System.Web.Mvc;
 using PlantM.Models;
 
 namespace PlantM.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class CustomGroupController : Controller
     {
-/*        private CustomGroupDbContext db = new CustomGroupDbContext();*/
 
         // GET: CustomGroup/Create
         public ActionResult Create()
@@ -24,9 +24,24 @@ namespace PlantM.Controllers
             {
                 using (var db = new ApplicationDbContext())
                 {
-                    db.CustomGroup.Add(customGroup);
-                    db.SaveChanges();
-                    return RedirectToAction("Create", "SpeciesLabel", new { confirmationMessage = $"Custom group {customGroup.Name} has been created!" });
+                    try
+                    {
+                        db.CustomGroup.Add(customGroup);
+                        db.SaveChanges();
+                    }
+                    catch (System.Data.SqlClient.SqlException e)
+                    {
+                        return RedirectToAction("Create", "SpeciesLabel",
+                            new {confirmationMessage = $"Custom group {customGroup.Name} couldn't be created probably because it already exists!" + Environment.NewLine + $"{e.Message}"});
+                    }
+                    catch (Exception e)
+                    {
+                        return RedirectToAction("Create", "SpeciesLabel", 
+                            new { confirmationMessage = $"Custom group {customGroup.Name} couldn't be created due to this exception: '{e.Message}' "});
+                    }
+
+                    return RedirectToAction("Create", "SpeciesLabel", 
+                        new { confirmationMessage = $"Custom group {customGroup.Name} has been created!" });
                 }
             }
 

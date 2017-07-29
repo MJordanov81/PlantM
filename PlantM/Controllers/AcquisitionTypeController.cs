@@ -24,6 +24,7 @@ namespace PlantM.Controllers
         }
 
         // GET: AcquisitionType/Create
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             return View();
@@ -34,19 +35,30 @@ namespace PlantM.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult Create([Bind(Include = "Name")] AcquisitionType acquisitionType)
         {
             if (ModelState.IsValid)
             {
-                db.AcquisitionType.Add(acquisitionType);
-                db.SaveChanges();
+                try
+                {
+                    db.AcquisitionType.Add(acquisitionType);
+                    db.SaveChanges();
+                }
+                catch (Exception)
+                {
+
+                }
+
                 return RedirectToAction("Index");
+                  
             }
 
             return View(acquisitionType);
         }
 
         // GET: AcquisitionType/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(string id)
         {
             if (id == null)
@@ -63,6 +75,7 @@ namespace PlantM.Controllers
         }
 
         // POST: AcquisitionType/Delete/5
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)

@@ -1,4 +1,5 @@
-﻿@model IEnumerable<PlantM.Models.PlantModels.Vendor>
+﻿@using PlantM.Helpers
+@model IEnumerable<PlantM.Models.PlantModels.Vendor>
 
 @{
     ViewBag.Title = "Index";
@@ -7,7 +8,7 @@
 <h2>Vendors</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create").If(User.IsInRole("Admin"))
 </p>
 <table class="table">
     <tr>
@@ -29,9 +30,9 @@
                 @Html.DisplayFor(modelItem => item.WebSite)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new {id = item.Name}) |
+                @Html.ActionLink("Edit", "Edit", new {id = item.Name}).If(User.IsInRole("Admin")) |
                 @Html.ActionLink("Details", "Details", new {id = item.Name}) |
-                @Html.ActionLink("Delete", "Delete", new {id = item.Name})
+                @Html.ActionLink("Delete", "Delete", new {id = item.Name}).If(User.IsInRole("Admin"))
             </td>
         </tr>
     }

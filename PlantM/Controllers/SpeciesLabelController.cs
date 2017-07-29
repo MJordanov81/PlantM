@@ -5,7 +5,7 @@ using System.Web.Mvc;
 
 namespace PlantM.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class SpeciesLabelController : Controller
     {
         ApplicationDbContext db = new ApplicationDbContext();
@@ -18,7 +18,10 @@ namespace PlantM.Controllers
             ViewBag.FamilyList = new SelectList(db.Family, "Name", "Name");
             ViewBag.GenusList = new SelectList(db.Genus, "Name", "Name");
             ViewBag.SpeciesList = new SelectList(db.Species, "Name", "Name");
+
+
             ViewBag.Message = confirmationMessage;
+            
 
             return View();
         }

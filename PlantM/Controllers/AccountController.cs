@@ -6,10 +6,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace PlantM.Controllers
 {
-    [Authorize]
+    [Authorize] 
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -39,10 +40,7 @@ namespace PlantM.Controllers
 
         public ApplicationUserManager UserManager
         {
-            get
-            {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
+            get { return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>(); }
             private set
             {
                 _userManager = value;
@@ -146,10 +144,17 @@ namespace PlantM.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+            var db = new ApplicationDbContext();
+            var userManagerLocal = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+
                 var result = await UserManager.CreateAsync(user, model.Password);
+
+                userManagerLocal.AddToRole(user.Id, "Guest");
+
                 if (result.Succeeded)
                 {
 

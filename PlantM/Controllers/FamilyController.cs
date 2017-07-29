@@ -4,7 +4,7 @@ using PlantM.Models;
 
 namespace PlantM.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class FamilyController : Controller
     {
 /*        FamilyDbContext db = new FamilyDbContext();*/

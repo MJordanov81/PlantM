@@ -2,13 +2,17 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div>
-    @Html.ActionLink("Test entities", "TestEntities", "Administrator")
-</div>
+<button class="btn btn-primary">
+    @Html.ActionLink("Create test entities", "CreateTestEntities", "Administrator")
+</button>
 
-<div>
+<button class="btn btn-primary">
     @Html.ActionLink("Export plants", "ExportPlants", "Administrator")
-</div>
+</button>
+
+<button class="btn btn-primary">
+    @Html.ActionLink("Empty table", "EmptyTable", "Administrator")
+</button>
 
 
 

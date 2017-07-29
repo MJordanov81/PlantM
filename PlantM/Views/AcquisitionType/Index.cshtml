@@ -1,10 +1,13 @@
-﻿@model IEnumerable<PlantM.Models.PlantModels.AcquisitionType>
+﻿@using Microsoft.Ajax.Utilities
+@using PlantM.Helpers
+@model IEnumerable<PlantM.Models.PlantModels.AcquisitionType>
 
 @{
     ViewBag.Title = "Index";
 }
 
 <h2>Acquisition types</h2>
+@Html.ActionLink("Create New", "Create").If(User.IsInRole("Admin"))
 
 <table class="table">
     <tr>
@@ -18,16 +21,15 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.ActionLink("Delete", "Delete", new {id = item.Name})
+                @Html.ActionLink("Delete", "Delete", new {id = item.Name}).If(User.IsInRole("Admin"))
             </td>
         </tr>
     }
 
 </table>
 
-<div class="btn btn-primary">
-    @Html.ActionLink("Create New", "Create")
-</div>
+
+
 
 <div class="btn btn-default">
     @Html.ActionLink("Back to vendor", "Index", "Vendor")

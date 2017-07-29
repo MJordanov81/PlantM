@@ -8,8 +8,10 @@ namespace PlantM.Models.PlantModels
         [Key]
         [Required]
         [Index(IsUnique = true)]
-        [Display(Name = "Web site")]
+        [Display(Name = "Name")]
         public string Name { get; set; }
+
+        [Display(Name = "Web site")]
         public string WebSite { get; set; }
     }
 }

@@ -30,7 +30,9 @@
         </div>
     }
     
-    <div class="errorMessageCust">
-        @ViewBag.ErrorMessage
-    </div>
+    @if (ViewBag.ErrorMessage != null)
+    {
+        @Html.Raw("<script>alert('" + ViewBag.ErrorMessage + "');</script>")          
+    }
+
 </div>
