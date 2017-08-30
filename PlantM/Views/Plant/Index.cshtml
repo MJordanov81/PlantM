@@ -9,9 +9,6 @@
 
 <h2>Plants</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create").If(User.IsInRole("Admin"))
-</p>
 
 @using (Html.BeginForm("Index", "Plant", FormMethod.Get))
 {
@@ -21,34 +18,35 @@
     </p>
 }
 
-<table class="table">
+<div class="test"></div>
+
+
+
+<table class="table table-hover">
     <tr>
         <th>
             @Html.DisplayName("Status")
         </th>
         <th>
-            @Html.ActionLink("Collection No.", "Index", "Plant", new { sortOrder = ViewBag.CollectionNumberSortParam, currentFilter = ViewBag.CurrentFilter }, new{ })
+            @Html.DisplayName("Photo")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model[0].AcquisitionTypeName)
+            @Html.DisplayNameFor(model => model[0].CollectionNumber)
+            @Html.ActionLink(" ", "Index", "Plant", new { sortOrder = ViewBag.CollectionNumberSortParam, currentFilter = ViewBag.CurrentFilter }, new { @class = "glyphicon glyphicon-triangle-bottom" })
+        </th>
+        <th>          
+            @Html.DisplayNameFor(model => model[0].SpeciesLabel)
+            @Html.ActionLink(" ", "Index", "Plant", new { sortOrder = ViewBag.SpeciesLabelParam, currentFilter = ViewBag.CurrentFilter }, new { @class = "glyphicon glyphicon-triangle-bottom" })
         </th>
         <th>
-            @Html.ActionLink("Location", "Index", "Plant", new { sortOrder = ViewBag.LocationSortParam, currentFilter = ViewBag.CurrentFilter }, new { })
+            @Html.DisplayNameFor(model => model[0].Location)
+            @Html.ActionLink(" ", "Index", "Plant", new { sortOrder = ViewBag.LocationSortParam, currentFilter = ViewBag.CurrentFilter }, new { @class = "glyphicon glyphicon-triangle-bottom" })
         </th>
         <th>
             @Html.DisplayNameFor(model => model[0].SoilName)
         </th>
         <th>
-            @Html.ActionLink("Species label", "Index", "Plant", new { sortOrder = ViewBag.SpeciesLabelParam, currentFilter = ViewBag.CurrentFilter }, new { })
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model[0].VendorName)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model[0].Size)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model[0].DateOfAcquisition)
         </th>
         <th>
             @Html.DisplayNameFor(model => model[0].Age)
@@ -58,6 +56,9 @@
         </th>
         <th></th>
     </tr>
+
+    
+    
 
     @foreach (var item in Model)
     {
@@ -73,14 +74,17 @@
                 }
                 else
                 {
-                    @Html.Label($"Alive", new { @class = "label-active-plant label-in-list" })
+                    @Html.Label($"Alive", new { @class = "label-active-plant label-in-list", @style = "color:white;" })
                 }
+            </td>
+            <td>
+                @Html.Image(item.PhotoUrl, "photo", "0px", "img-thumbnail")
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CollectionNumber)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.AcquisitionTypeName)
+                @Html.DisplayFor(modelItem => item.SpeciesLabelName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.LocationName)
@@ -89,16 +93,7 @@
                 @Html.DisplayFor(modelItem => item.SoilName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.SpeciesLabelName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.VendorName)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Size)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateOfAcquisition)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Age)
@@ -107,7 +102,7 @@
                 @Html.DisplayFor(modelItem => item.PotType)
             </td>
             <td>
-                @Html.ActionLink("Details", "Details", new {id = item.CollectionNumber})
+                @Html.ActionLink("Details", "Details", new {id = item.CollectionNumber}, new { @class = "btn btn-sm" })
             </td>
         </tr>
     }

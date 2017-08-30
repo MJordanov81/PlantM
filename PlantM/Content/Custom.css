@@ -40,3 +40,84 @@ label.label-plant-number {
     border-radius: 10px
 }
 
+
+.navbar-nav > li > a {
+    background-color: inherit !important;
+}
+
+.img-thumbnail {
+    width: 60px;
+    height: 60px;
+}
+
+.image-zoom {
+    width: auto;
+    height: 200px;
+    border: 1px solid #e8e8e8;
+    padding: 4px;
+    background-color: #fff;
+    -webkit-transition: ease-in-out .3s;
+}
+
+.test {
+    -webkit-transition: ease-in-out .3s;
+}
+
+.right {
+    float: right;
+    margin-left: 5px;
+}
+
+.accent {
+    font-size: 3em;
+    color: #7dce76;
+    /*background-color: blanchedalmond*/
+}
+
+.details-box {
+    border: 1px solid #7dce76;
+    border-radius: 6px;
+    padding: 20px;
+    margin-right: 5px;
+}
+
+.table > thead > tr > th,
+.table > tbody > tr > th,
+.table > tfoot > tr > th,
+.table > thead > tr > td,
+.table > tbody > tr > td,
+.table > tfoot > tr > td {
+    border-bottom: 1px solid #ebebeb;
+
+}
+
+th {
+    font-weight: 400;
+    background-color: #808080;
+    color: #fff;
+    padding: 12px 10px !important;
+}
+
+th .glyphicon {
+    color: #7dce76;
+    margin-left: 5px;
+    font-size: 0.8em;
+}
+
+
+a:hover {
+    text-decoration: none;
+}
+
+.glyphicon {
+    margin-right: 6px
+}
+
+.btn-sm:hover {
+    background-color: darkseagreen;
+    -webkit-transition: ease-in-out .3s;
+}
+
+/* Images zoom*/
+
+

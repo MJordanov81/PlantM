@@ -21,12 +21,14 @@ namespace PlantM
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js"
+                      "~/Scripts/respond.js",
+                      "~/Scripts/customization.js"
                       ));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrapCustom.css",
-                      "~/Content/site.css", "~/Content/custom.css"));
+                      "~/Content/site.css",
+                      "~/Content/custom.css"));
         }
     }
 }

@@ -7,7 +7,6 @@
     <title>@ViewBag.Title - PlantM</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -22,10 +21,8 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Species label", "Create", "SpeciesLabel").If(User.IsInRole("Admin"))</li>
-                    <li>@Html.ActionLink("Soil", "Index", "Soil")</li>
-                    <li>@Html.ActionLink("Vendor", "Index", "Vendor")</li>
-                    <li>@Html.ActionLink("Location", "Index", "Location")</li>
+                    <li>@Html.ActionLink("Home", "Index", "Home").If(User.IsInRole("Admin"))</li>
+                    <li>@Html.ActionLink("Add new plant", "Create", "Plant").If(User.IsInRole("Admin"))</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
