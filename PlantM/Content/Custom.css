@@ -17,7 +17,7 @@
     background-color: crimson;
     color: blanchedalmond;
     padding: 10px;
-    border-radius: 10px            
+    border-radius: 10px
 }
 
 .label-active-plant {
@@ -29,21 +29,16 @@
 
 .label-in-list {
     font-size: smaller;
-    padding: 2px;
+    padding: 5px 10px;
 }
 
-
 label.label-plant-number {
-    background-color: blueviolet;
-    color: blanchedalmond;
+    background-color: #4E5D6C;
+    color: #fff;
     padding: 10px;
     border-radius: 10px
 }
 
-
-.navbar-nav > li > a {
-    background-color: inherit !important;
-}
 
 .img-thumbnail {
     width: 60px;
@@ -52,15 +47,10 @@ label.label-plant-number {
 
 .image-zoom {
     width: auto;
-    height: 200px;
+    height: 90px;
     border: 1px solid #e8e8e8;
     padding: 4px;
     background-color: #fff;
-    -webkit-transition: ease-in-out .3s;
-}
-
-.test {
-    -webkit-transition: ease-in-out .3s;
 }
 
 .right {
@@ -75,10 +65,15 @@ label.label-plant-number {
 }
 
 .details-box {
-    border: 1px solid #7dce76;
-    border-radius: 6px;
+    background-color: #4E5D6C;
+    border: 0px solid #7dce76;
+    border-radius: 0px;
     padding: 20px;
     margin-right: 5px;
+}
+
+table {
+    margin-top: 45px;
 }
 
 .table > thead > tr > th,
@@ -87,36 +82,66 @@ label.label-plant-number {
 .table > thead > tr > td,
 .table > tbody > tr > td,
 .table > tfoot > tr > td {
-    border-bottom: 1px solid #ebebeb;
+    border-bottom: 1px solid #4E5D6C;
+    padding: 5px 10px;
+    vertical-align: middle !important;
+}
 
+.table-hover > tbody > tr:hover {
+    background-color: rgba(255,255,255,.05);
 }
 
 th {
     font-weight: 400;
-    background-color: #808080;
-    color: #fff;
+    background-color: #4E5D6C;
+    color: rgba(255,255,255,.5);
     padding: 12px 10px !important;
 }
 
 th .glyphicon {
-    color: #7dce76;
+    color: rgba(255,255,255,.1);
     margin-left: 5px;
     font-size: 0.8em;
 }
 
+th:hover .glyphicon {
+    color: #d9534f;
+    margin-left: 5px;
+    font-size: 0.8em;
+    transition: .5s;
+}
 
-a:hover {
+tr:hover .btn {
+    background-color: #d9534f !important;
+}
+
+
+a {
     text-decoration: none;
+    transition: .5s;
+}
+
+.btn {
+    transition: .5s;
+}
+
+.btn-default:hover,
+.btn-default.hover {
+    color: #ffffff;
+    background-color: #1e2b38 !important;
+    border-color: rgba(0, 0, 0, 0);
 }
 
 .glyphicon {
-    margin-right: 6px
+    margin: 5px
 }
 
-.btn-sm:hover {
-    background-color: darkseagreen;
-    -webkit-transition: ease-in-out .3s;
+input,
+select,
+textarea {
+    width: 500px !important;
 }
+
 
 /* Images zoom*/
 

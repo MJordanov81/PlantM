@@ -15,11 +15,11 @@
             <div class="col-md-6">
                 @if (!Model.HasWithered && !Model.IsDeleted && User.IsInRole("Admin"))
                 {
-                    <button class="btn btn-danger right">@Html.ActionLink("Delete", "Delete", new { id = Model.CollectionNumber })</button>
-                    <button class="btn btn-info right">@Html.ActionLink("Wither", "Wither", new { id = Model.CollectionNumber })</button>
-                    <button class="btn btn-primary right">@Html.ActionLink("Repot", "Repot", new { id = Model.CollectionNumber })</button>
-                    <button class="btn btn-primary right">@Html.ActionLink("Relocate", "Relocate", new { id = Model.CollectionNumber })</button>
-                    <button class="btn btn-primary right">@Html.ActionLink("Edit", "Edit", new { id = Model.CollectionNumber })</button>
+                    @Html.ActionLink("Delete", "Delete", new { id = Model.CollectionNumber }, new { @class = "btn btn-danger right" })
+                    @Html.ActionLink("Wither", "Wither", new { id = Model.CollectionNumber }, new { @class = "btn btn-info right" })
+                    @Html.ActionLink("Repot", "Repot", new { id = Model.CollectionNumber }, new { @class = "btn btn-info right" })
+                    @Html.ActionLink("Relocate", "Relocate", new { id = Model.CollectionNumber }, new { @class = "btn btn-info right" })
+                    @Html.ActionLink("Edit", "Edit", new { id = Model.CollectionNumber }, new { @class = "btn btn-primary right" })
                 }
                 @if (@Model.HasWithered)
                 {
@@ -146,7 +146,7 @@
                 </div>
 
                 <div class="col-md-12">
-                    <button class="btn btn-default">@Html.ActionLink("Back to List", "Index")</button>
+                    <a href="/Plant/index" class="btn btn-default">Back to List</a>
                 </div>
             </div>
         </div>

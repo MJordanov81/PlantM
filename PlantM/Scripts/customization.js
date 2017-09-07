@@ -1,6 +1,6 @@
 ﻿
 
-let container = $(".test");
+let container = $("#image-zoom");
 let image = $(".img-thumbnail");
 
 image.mouseover(function () {
@@ -15,12 +15,16 @@ image.mouseover(function () {
         .append($("<img>")
             .addClass("image-zoom")
             .attr("src", $(this).attr("src")))
-       
+
+    container.fadeIn("slow");
 })
 
 container.mouseleave(function () {
+    container.fadeOut();
     container.html("")
         .css("left", "")
-        .css("top", "");
+        .css("top", "")
 });
+
+
 

@@ -10,17 +10,15 @@
 <h2>Plants</h2>
 
 
-@using (Html.BeginForm("Index", "Plant", FormMethod.Get))
+@using (Html.BeginForm("Index", "Plant", FormMethod.Get, new { @class = "form-inline"}))
 {
     <p>
-        Search: @Html.TextBox("searchString", ViewBag.CurrentFilter as string)
-        <input type="submit" value="Search" />
+        Search: @Html.TextBox("searchString", ViewBag.CurrentFilter as string, new { @class = "form-control" })
+        <button type="submit" class="btn btn-default">Search</button>
     </p>
 }
 
-<div class="test"></div>
-
-
+<div id="image-zoom"></div>
 
 <table class="table table-hover">
     <tr>
@@ -59,22 +57,21 @@
 
     
     
-
     @foreach (var item in Model)
     {
         <tr>
             <td>
                 @if (item.IsDeleted)
                 {
-                    @Html.Label($"Deleted", new { @class = "label-inactive-plant label-in-list" })
+                    @Html.Label($"D", new { @class = "label-inactive-plant label-in-list" })
                 }
                 else if (item.HasWithered)
                 {
-                    @Html.Label($"Withered", new { @class = "label-inactive-plant label-in-list" })
+                    @Html.Label($"W", new { @class = "label-inactive-plant label-in-list" })
                 }
                 else
                 {
-                    @Html.Label($"Alive", new { @class = "label-active-plant label-in-list", @style = "color:white;" })
+                    @Html.Label($"A", new { @class = "label-active-plant label-in-list", @style = "color:white;" })
                 }
             </td>
             <td>
